@@ -1,6 +1,20 @@
 pipeline {
     agent none
     stages {
+        stage("Prepare") {
+            environment {
+                APP = credentials("iervan_secret")
+            }
+            agent {
+                node {
+                    label "linux && java11"
+                }
+            }
+            steps {
+                echo "App User : ${APP_USR}"
+                echo "App Password : ${APP_PSW}"
+            }
+        }
         stage("Build") {
             agent {
                 node {
